@@ -1,0 +1,76 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Poppins:wght@300;400;600&display=swap');
+
+/* 🌗 Dark Mode Variables */
+:root {
+  --primary-color: #ff6347; /* Tomato red */
+  --secondary-color: #4a4a4a; /* Neutral gray */
+  --background-light: #ffffff;
+  --background-dark: #121212;
+  --text-light: #333333;
+  --text-dark: #f5f5f5;
+  --button-bg: #ff6347;
+  --button-text: #ffffff;
+}
+
+/* 🌑 Dark Mode */
+.dark-mode {
+  --background-light: var(--background-dark);
+  --text-light: var(--text-dark);
+}
+
+/* 🌍 General Reset & Font Setup */
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--background-light);
+  color: var(--text-light);
+  margin: 0;
+  padding: 0;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+h1, h2, h3 {
+  font-family: 'Oswald', sans-serif;
+}
+
+button {
+  font-family: 'Poppins', sans-serif;
+  background: var(--button-bg);
+  color: var(--button-text);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+
+button:hover {
+  background: #e5533d;
+}
+
+/* Responsive Layout */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Dark Mode Toggle Button */
+.dark-mode-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: var(--button-bg);
+  color: var(--button-text);
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+
+
+/*! CODE GRAVEYARD */
+/* Tailwind 
+@tailwind base;
+@tailwind components;
+@tailwind utilities; */
+

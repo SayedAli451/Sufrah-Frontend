@@ -1,0 +1,130 @@
+/* Cart.css */
+
+/* General Layout */
+.cart-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 20px;
+    max-width: 1200px;
+    margin: auto;
+    font-family: 'Inter', sans-serif;
+  }
+  
+  .cart-header {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .empty-cart-message {
+    font-size: 1.2rem;
+    color: #555;
+  }
+  
+  .cart-items-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+  }
+  
+  .cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+  }
+  
+  .item-info {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .item-actions {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .btn-action,
+  .btn-remove {
+    padding: 8px 12px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn-action {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  .btn-action:hover {
+    background-color: #45a049;
+  }
+  
+  .btn-remove {
+    background-color: #f44336;
+    color: white;
+  }
+  
+  .btn-remove:hover {
+    background-color: #e53935;
+  }
+  
+  /* Total Section */
+  .total-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-top: 20px;
+  }
+  
+  .total-section h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .btn-checkout {
+    padding: 12px 20px;
+    font-size: 1rem;
+    border-radius: 8px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn-checkout:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .cart-container {
+      padding: 15px;
+    }
+  
+    .cart-header {
+      font-size: 2rem;
+    }
+  
+    .cart-item {
+      flex-direction: column;
+      text-align: center;
+    }
+  
+    .item-actions {
+      justify-content: center;
+      margin-top: 10px;
+    }
+  }

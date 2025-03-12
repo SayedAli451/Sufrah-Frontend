@@ -1,0 +1,145 @@
+/* ManageMenu.css */
+
+/* Main container */
+.manage-menu-container {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  /* Title */
+  .manage-menu-title {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  /* Subtitle */
+  .manage-menu-subtitle {
+    font-size: 1.5rem;
+    color: #555;
+    margin-bottom: 20px;
+  }
+  
+  /* Error message */
+  .error-message {
+    color: red;
+    font-size: 1rem;
+    margin-bottom: 20px;
+  }
+  
+  /* Form */
+  .menu-form {
+    display: grid;
+    grid-gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .input-field, .select-field {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+  }
+  
+  .input-field:focus, .select-field:focus {
+    outline-color: #4e6ef2;
+    border-color: #4e6ef2;
+  }
+  
+  /* Buttons */
+  .button-group {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .submit-button, .cancel-button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  
+  .submit-button {
+    background-color: #4e6ef2;
+    color: white;
+    border: none;
+  }
+  
+  .submit-button:hover {
+    background-color: #3c5cb6;
+  }
+  
+  .cancel-button {
+    background-color: #f44336;
+    color: white;
+    border: none;
+  }
+  
+  .cancel-button:hover {
+    background-color: #e53935;
+  }
+  
+  /* Menu items list */
+  .menu-items-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .menu-item {
+    background-color: #fff;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .menu-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .menu-item-description {
+    display: block;
+  }
+  
+  .menu-item-price {
+    margin-top: 10px;
+    font-weight: bold;
+  }
+  
+  .item-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+  }
+  
+  .edit-button, .delete-button {
+    padding: 5px 10px;
+    font-size: 0.9rem;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  
+  .edit-button {
+    background-color: #ff9800;
+    color: white;
+  }
+  
+  .edit-button:hover {
+    background-color: #f57c00;
+  }
+  
+  .delete-button {
+    background-color: #f44336;
+    color: white;
+  }
+  
+  .delete-button:hover {
+    background-color: #e53935;
+  }

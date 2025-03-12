@@ -1,0 +1,52 @@
+.orders-container {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .orders-title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 1rem;
+  }
+  
+  .orders-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .order-item {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .order-restaurant {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #555;
+  }
+  
+  .order-status {
+    color: #777;
+  }
+  
+  .order-items {
+    list-style-type: none;
+    padding-left: 20px;
+  }
+  
+  .order-item-details {
+    font-size: 1rem;
+    color: #444;
+  }
+  
+  .order-total {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #333;
+  }
