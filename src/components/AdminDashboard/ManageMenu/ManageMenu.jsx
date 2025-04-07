@@ -1,40 +1,41 @@
-import { useState, useEffect } from "react"; // Import hooks for state and lifecycle management
-import { useParams } from "react-router-dom"; // Import hook for URL parameters
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import {
   fetchMenuItems,
   addMenuItem,
   updateMenuItem,
   deleteMenuItem,
-} from "../../../services/menuService"; // Import menu service functions
-import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
-import "./ManageMenu.css"; // Optional: For additional custom styles
+} from "../../../services/menuService";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./ManageMenu.css";
 
 const ManageMenu = () => {
-  const { id } = useParams(); // Get restaurant ID from URL parameters
-  const [menuItems, setMenuItems] = useState([]); // State for menu items
-  const [newItem, setNewItem] = useState({ // State for new menu item
+  const { id } = useParams();
+  const [menuItems, setMenuItems] = useState([]);
+  const [newItem, setNewItem] = useState({
     name: "",
     description: "",
     price: "",
     category: "",
+    imageUrl: "",
   });
-  const [editingItem, setEditingItem] = useState(null); // State for item being edited
-  const [error, setError] = useState(null); // State for error messages
+  const [editingItem, setEditingItem] = useState(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    loadMenuItems(); // Load menu items on component mount
+    loadMenuItems();
   }, []);
 
   const loadMenuItems = async () => {
     try {
-      const data = await fetchMenuItems(id); // Fetch menu items from service
-      setMenuItems(data); // Update state with fetched menu items
+      const data = await fetchMenuItems(id);
+      setMenuItems(data);
     } catch (err) {
-      setError(err.message); // Set error message if fetch fails
+      setError(err.message);
     }
   };
 
-  const handleChange = (e) => { // Handle input changes for new or editing item
+  const handleChange = (e) => {
     if (editingItem) {
       setEditingItem({ ...editingItem, [e.target.name]: e.target.value });
     } else {
@@ -43,47 +44,46 @@ const ManageMenu = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent default form submission
-
-    if (!newItem.category) { // Validate category selection
+    e.preventDefault();
+    if (!newItem.category) {
       setError("Please select a category.");
       return;
     }
 
     try {
-      const addedItem = await addMenuItem(newItem, id); // Add new menu item
-      setMenuItems([...menuItems, addedItem]); // Update state with new item
-      setNewItem({ name: "", description: "", price: "", category: "" }); // Reset new item form
+      const addedItem = await addMenuItem(newItem, id);
+      setMenuItems([...menuItems, addedItem]);
+      setNewItem({ name: "", description: "", price: "", category: "", imageUrl: "" });
     } catch (err) {
-      setError(err.message); // Set error message if adding fails
+      setError(err.message);
     }
   };
 
   const handleEditClick = (item) => {
-    setEditingItem(item); // Set the item to be edited
+    setEditingItem(item);
   };
 
   const handleSaveEdit = async () => {
-    if (!editingItem.category) { // Validate category selection
+    if (!editingItem.category) {
       setError("Please select a category.");
       return;
     }
 
     try {
-      const updatedItem = await updateMenuItem(editingItem); // Update the menu item
-      setMenuItems(menuItems.map((item) => (item._id === updatedItem._id ? updatedItem : item))); // Update state with updated item
-      setEditingItem(null); // Clear editing state
+      const updatedItem = await updateMenuItem(editingItem);
+      setMenuItems(menuItems.map((item) => (item._id === updatedItem._id ? updatedItem : item)));
+      setEditingItem(null);
     } catch (err) {
-      setError(err.message); // Set error message if updating fails
+      setError(err.message);
     }
   };
 
-  const handleDelete = async (itemId) => { // Handle menu item deletion
+  const handleDelete = async (itemId) => {
     try {
-      await deleteMenuItem(itemId); // Delete the item
-      setMenuItems(menuItems.filter((item) => item._id !== itemId)); // Update state to remove deleted item
+      await deleteMenuItem(itemId);
+      setMenuItems(menuItems.filter((item) => item._id !== itemId));
     } catch (err) {
-      setError(err.message); // Set error message if deletion fails
+      setError(err.message);
     }
   };
 
@@ -92,21 +92,21 @@ const ManageMenu = () => {
       <h1 className="text-center mb-4">Manage Menu</h1>
 
       {error && (
-        <div className="alert alert-danger text-center">{error}</div> // Display error message if present
+        <div className="alert alert-danger text-center">{error}</div>
       )}
 
       <div className="card p-4 shadow mb-5">
         <h2 className="text-center mb-3">
-          {editingItem ? "Edit Menu Item" : "Add Menu Item"} {/* Conditional heading */}
+          {editingItem ? "Edit Menu Item" : "Add Menu Item"}
         </h2>
-        <form onSubmit={editingItem ? handleSaveEdit : handleSubmit}> {/* Conditional form submission */}
+        <form onSubmit={editingItem ? handleSaveEdit : handleSubmit}>
           <div className="mb-3">
             <input
               type="text"
               name="name"
               placeholder="Item Name"
-              value={editingItem ? editingItem.name : newItem.name} // Set input value based on state
-              onChange={handleChange} // Handle input change
+              value={editingItem ? editingItem.name : newItem.name}
+              onChange={handleChange}
               className="form-control"
               required
             />
@@ -117,8 +117,8 @@ const ManageMenu = () => {
               type="text"
               name="description"
               placeholder="Description"
-              value={editingItem ? editingItem.description : newItem.description} // Set input value based on state
-              onChange={handleChange} // Handle input change
+              value={editingItem ? editingItem.description : newItem.description}
+              onChange={handleChange}
               className="form-control"
             />
           </div>
@@ -128,8 +128,8 @@ const ManageMenu = () => {
               type="number"
               name="price"
               placeholder="Price (BD)"
-              value={editingItem ? editingItem.price : newItem.price} // Set input value based on state
-              onChange={handleChange} // Handle input change
+              value={editingItem ? editingItem.price : newItem.price}
+              onChange={handleChange}
               className="form-control"
               required
             />
@@ -138,11 +138,11 @@ const ManageMenu = () => {
           <div className="mb-3">
             <select
               name="category"
-              value={editingItem ? editingItem.category : newItem.category} // Set select value based on state
-              onChange={handleChange} // Handle select change
+              value={editingItem ? editingItem.category : newItem.category}
+              onChange={handleChange}
               className="form-select"
             >
-              <option value="">Select Category</option> {/* Default option */}
+              <option value="">Select Category</option>
               <option value="Appetizers">Appetizers</option>
               <option value="Main Course">Main Course</option>
               <option value="Desserts">Desserts</option>
@@ -150,53 +150,66 @@ const ManageMenu = () => {
             </select>
           </div>
 
+          <div className="mb-3">
+            <input
+              type="url"
+              name="imageUrl"
+              placeholder="Image URL"
+              value={editingItem ? editingItem.imageUrl : newItem.imageUrl}
+              onChange={handleChange}
+              className="form-control"
+            />
+          </div>
+
           <div className="d-grid gap-2">
             <button type="submit" className="btn btn-primary">
-              {editingItem ? "Save Changes" : "Add Item"} {/* Conditional button text */}
+              {editingItem ? "Save Changes" : "Add Item"}
             </button>
-            {editingItem && (
-              <button
-                type="button"
-                className="btn btn-secondary"
-                onClick={() => setEditingItem(null)} // Clear editing state
-              >
-                Cancel
-              </button>
-            )}
           </div>
         </form>
       </div>
 
-      <h2 className="text-center mb-3">Current Menu</h2>
+      <h3>Menu Items</h3>
       {menuItems.length === 0 ? (
-        <p className="text-center">No menu items available.</p> // Message if no items
+        <p>No menu items available.</p>
       ) : (
-        <ul className="list-group">
+        <div className="menu-items-list">
           {menuItems.map((item) => (
-            <li key={item._id} className="list-group-item d-flex justify-content-between align-items-center">
-              <div>
-                <strong>{item.name}</strong> - {item.price} BD {/* Display menu item details */}
+            <div key={item._id} className="menu-item-card">
+              <div className="menu-item-image-container">
+                {item.imageUrl && (
+                  <img
+                    src={item.imageUrl}
+                    alt={item.name}
+                    className="menu-item-image"
+                    width="100"
+                  />
+                )}
               </div>
-              <div>
-                <button
-                  className="btn btn-warning btn-sm me-2"
-                  onClick={() => handleEditClick(item)} // Set item to be edited
-                >
-                  Edit
-                </button>
-                <button
-                  className="btn btn-danger btn-sm"
-                  onClick={() => handleDelete(item._id)} // Delete item
-                >
-                  Delete
-                </button>
-              </div>
-            </li>
+              <h4>{item.name}</h4>
+              <p>{item.description}</p>
+              <p><strong>Price:</strong> {item.price} BD</p>
+              <p><strong>Category:</strong> {item.category}</p>
+
+              <button
+                className="btn btn-warning"
+                onClick={() => handleEditClick(item)}
+              >
+                Edit
+              </button>
+
+              <button
+                className="btn btn-danger"
+                onClick={() => handleDelete(item._id)}
+              >
+                Delete
+              </button>
+            </div>
           ))}
-        </ul>
+        </div>
       )}
     </div>
   );
 };
 
-export default ManageMenu; // Export the ManageMenu component
+export default ManageMenu;

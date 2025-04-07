@@ -1,84 +1,139 @@
-import { useEffect, useState } from "react"; // Import hooks for state and lifecycle management
-import { Link } from "react-router-dom"; // Import Link for navigation
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import {
   fetchAdminRestaurants,
   fetchAdminOrders,
-} from "../../services/adminService"; // Import admin service functions
-import "./AdminDashboard.css"; // Import the CSS file for styles
+  deleteRestaurant,
+} from "../../services/adminService";
+import "./AdminDashboard.css"; // Import custom CSS file for styles
 
 const AdminDashboard = () => {
-  const [restaurants, setRestaurants] = useState([]); // State for storing restaurants
-  const [orders, setOrders] = useState([]); // State for storing orders
+  const [restaurants, setRestaurants] = useState([]);
+  const [orders, setOrders] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [restaurantToDelete, setRestaurantToDelete] = useState(null);
 
   useEffect(() => {
     const loadData = async () => {
-      const fetchedRestaurants = await fetchAdminRestaurants(); // Fetch restaurants for admin
-      const fetchedOrders = await fetchAdminOrders(); // Fetch orders for admin
-      setRestaurants(fetchedRestaurants); // Update restaurants state
-      setOrders(fetchedOrders); // Update orders state
+      const fetchedRestaurants = await fetchAdminRestaurants();
+      const fetchedOrders = await fetchAdminOrders();
+      setRestaurants(fetchedRestaurants);
+      setOrders(fetchedOrders);
     };
 
-    loadData(); // Call loadData function
-  }, []); // Run only on component mount
+    loadData();
+  }, []);
+
+  const handleOpenModal = (restaurantId) => {
+    setRestaurantToDelete(restaurantId);
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setRestaurantToDelete(null);
+    setShowModal(false);
+  };
+
+  const handleDeleteRestaurant = async () => {
+    try {
+      await deleteRestaurant(restaurantToDelete);
+      setRestaurants((prevRestaurants) =>
+        prevRestaurants.filter((restaurant) => restaurant._id !== restaurantToDelete)
+      );
+      handleCloseModal();
+    } catch (err) {
+      console.error("Error deleting restaurant:", err);
+    }
+  };
 
   return (
     <div className="admin-dashboard">
-      <h1 className="admin-dashboard__title">Admin Dashboard</h1>
+      <h1 className="admin-dashboard__title text-center">Admin Dashboard</h1>
 
       <h2 className="admin-dashboard__section-title">Manage Restaurants</h2>
       <Link to="/admin/create-restaurant">
-        <button className="admin-dashboard__btn">Create New Restaurant</button> {/* Button to create a new restaurant */}
+        <button className="btn btn-success mb-4">Create New Restaurant</button>
       </Link>
 
-      {restaurants.length > 0 ? ( // Check if there are restaurants to display
-        <ul className="admin-dashboard__list">
+      {restaurants.length > 0 ? (
+        <div className="row">
           {restaurants.map((restaurant) => (
-            <li
-              key={restaurant._id} // Unique key for each restaurant
-              className="admin-dashboard__list-item d-flex justify-content-between align-items-center"
-            >
-              <h3 className="admin-dashboard__restaurant-name mb-0">
-                {restaurant.name} {/* Display restaurant name */}
-              </h3>
-              <Link
-                className="btn btn-primary admin-dashboard__link"
-                to={`/admin/restaurant/${restaurant._id}/menu`}
-              >
-                Manage Menu {/* Link to manage restaurant menu */}
-              </Link>
-            </li>
+            <div key={restaurant._id} className="col-md-4 mb-4">
+              <div className="card">
+                <div className="card-body">
+                  <h3 className="card-title">{restaurant.name}</h3>
+                  <div className="d-flex justify-content-between">
+                    <Link
+                      className="btn btn-primary"
+                      to={`/admin/restaurant/${restaurant._id}/menu`}
+                    >
+                      Manage Menu
+                    </Link>
+                    <button
+                      className="btn btn-danger"
+                      onClick={() => handleOpenModal(restaurant._id)}
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
           ))}
-        </ul>
+        </div>
       ) : (
-        <p className="admin-dashboard__no-data">No restaurants available.</p> // Message if no restaurants
+        <p className="admin-dashboard__no-data text-center">No restaurants available.</p>
       )}
 
       <h2 className="admin-dashboard__section-title">Manage Orders</h2>
-      {orders.length > 0 ? ( // Check if there are orders to display
-        <ul className="admin-dashboard__list">
+      {orders.length > 0 ? (
+        <ul className="list-group">
           {orders.map((order) => (
-            <li
-              key={order._id} // Unique key for each order
-              className="admin-dashboard__list-item d-flex justify-content-between align-items-center"
-            >
-              <p className="admin-dashboard__order-details mb-0">
-                Order from {order.restaurant?.name || "Unknown"} -{" "}
-                {order.status} {/* Display order details */}
+            <li key={order._id} className="list-group-item d-flex justify-content-between align-items-center">
+              <p className="mb-0">
+                Order from {order.restaurant?.name || "Unknown"} - {order.status}
               </p>
               <Link
-                className="btn btn-primary admin-dashboard__link"
+                className="btn btn-primary"
                 to={`/admin/order/${order._id}`}
               >
-                View Order {/* Link to view order details */}
+                View Order
               </Link>
             </li>
           ))}
         </ul>
       ) : (
-        <p className="admin-dashboard__no-data">No orders available.</p> // Message if no orders
+        <p className="admin-dashboard__no-data text-center">No orders available.</p>
+      )}
+
+      {/* Bootstrap Modal for delete confirmation */}
+      {showModal && (
+        <div className="modal show" tabIndex="-1" style={{ display: "block" }}>
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Delete Confirmation</h5>
+                <button type="button" className="close" onClick={handleCloseModal}>
+                  <span>&times;</span>
+                </button>
+              </div>
+              <div className="modal-body">
+                <p>Are you sure you want to delete this restaurant?</p>
+              </div>
+              <div className="modal-footer">
+                <button className="btn btn-danger" onClick={handleDeleteRestaurant}>
+                  Yes, Delete
+                </button>
+                <button className="btn btn-secondary" onClick={handleCloseModal}>
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );
 };
 
-export default AdminDashboard; // Export the AdminDashboard component
+export default AdminDashboard;

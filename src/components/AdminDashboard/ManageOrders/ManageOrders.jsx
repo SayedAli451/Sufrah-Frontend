@@ -1,14 +1,16 @@
-import { useState, useEffect } from "react"; // Import hooks for state and lifecycle management
+import { useState, useEffect, useContext } from "react"; // Import hooks for state and lifecycle management
 import { useParams, useNavigate } from "react-router-dom"; // Import hooks for URL parameters and navigation
 import {
   fetchOrderById,
   updateOrderStatus,
 } from "../../../services/orderService"; // Import order service functions
+import { AuthedUserContext } from "../../../App"; // Import context for the logged-in user
 import "./ManageOrders.css"; // Import CSS for styling
 
 const ManageOrders = () => {
   const { id } = useParams(); // Get order ID from URL parameters
   const navigate = useNavigate(); // Initialize navigation function
+  const user = useContext(AuthedUserContext); // Access the logged-in user from context
   const [order, setOrder] = useState(null); // State for storing order details
 
   useEffect(() => {
@@ -47,6 +49,9 @@ const ManageOrders = () => {
         <div className="mb-3">
           <p className="mb-1">
             <strong>Restaurant:</strong> {order.restaurant?.name} {/* Display restaurant name */}
+          </p>
+          <p className="mb-1">
+            <strong>Order by:</strong> {order.user?.username || "Unknown"} {/* Display the username */}
           </p>
           <p className="mb-0">
             <strong>Status:</strong> {order.status} {/* Display current order status */}

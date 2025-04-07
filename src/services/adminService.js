@@ -36,17 +36,41 @@ const fetchAdminOrders = async () => {
   }
 };
 
-export { fetchAdminRestaurants, fetchAdminOrders }; // Export functions for use in other modules
+// Delete a restaurant by ID (Admin only)
+const deleteRestaurant = async (restaurantId) => {
+  try {
+    const res = await fetch(`${BACKEND_URL}/restaurants/${restaurantId}`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`, // Include authorization token
+      },
+    });
 
-//! CODE GRAVEYARD
+    if (!res.ok) throw new Error("Failed to delete restaurant"); // Check for response status
 
-// // Fetch all restaurants
-// const fetchRestaurants = async () => {
-//   try {
-//     const res = await fetch(`${BACKEND_URL}/restaurants`); // Fetch all restaurants
-//     const data = await res.json(); // Parse response data
-//     setRestaurants(data); // Set state with fetched data
-//   } catch (err) {
-//     console.error("Error fetching restaurants:", err); // Log errors
-//   }
-// };
+    return await res.json(); // Return confirmation of deletion
+  } catch (err) {
+    console.error("Error deleting restaurant:", err); // Log errors
+    return { error: "Failed to delete restaurant" }; // Return an error message
+  }
+};
+
+// Fetch a single restaurant's details by ID
+const fetchRestaurantById = async (restaurantId) => {
+  try {
+    const res = await fetch(`${BACKEND_URL}/restaurants/${restaurantId}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`, // Include authorization token
+      },
+    });
+
+    if (!res.ok) throw new Error("Failed to fetch restaurant details"); // Check for response status
+
+    return await res.json(); // Return restaurant details
+  } catch (err) {
+    console.error("Error fetching restaurant details:", err); // Log errors
+    return null; // Return null on error
+  }
+};
+
+export { fetchAdminRestaurants, fetchAdminOrders, deleteRestaurant, fetchRestaurantById }; // Export functions for use in other modules

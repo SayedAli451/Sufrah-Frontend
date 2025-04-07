@@ -1,5 +1,4 @@
 /* Restaurant Page Styles */
-
 .restaurant-container {
   max-width: 900px;
   margin: 40px auto;
@@ -12,6 +11,15 @@
 .restaurant-details {
   text-align: center;
   margin-bottom: 30px;
+}
+
+/* Restaurant image */
+.restaurant-image {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 20px;
 }
 
 .menu-heading {
@@ -31,30 +39,62 @@
   border-radius: 10px;
   background: #fafafa;
   text-align: center;
+  transition: transform 0.3s ease;
 }
 
+.menu-card:hover {
+  transform: scale(1.05); /* Slight zoom effect on hover */
+}
+
+/* Image container for menu items */
+.menu-image-container {
+  position: relative;
+  width: 100%;
+  height: 250px;
+  overflow: hidden;
+  margin-bottom: 15px;
+}
+
+/* Make the image fill the container properly */
+.menu-item-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* Menu details container */
+.menu-item-details {
+  text-align: center;
+}
+
+/* Style for the menu description */
 .menu-description {
   font-size: 14px;
   color: #666;
+  margin: 10px 0;
 }
 
+/* Style for the price */
 .menu-price {
+  font-size: 1.2em;
   font-weight: bold;
+  color: #333;
 }
 
+/* Button style */
 .add-to-cart-btn {
-  display: inline-block;
-  background: #007bff;
-  color: #fff;
+  background-color: #007bff;
+  color: white;
+  border: none;
   padding: 8px 15px;
   border-radius: 5px;
-  border: none;
   cursor: pointer;
-  transition: 0.3s;
+  transition: background-color 0.3s;
 }
 
 .add-to-cart-btn:hover {
-  background: #0056b3;
+  background-color: #0056b3;
 }
 
 .loading-text,
@@ -63,4 +103,15 @@
   text-align: center;
   font-size: 18px;
   margin-top: 20px;
+}
+
+/* Make the menu image bigger on larger screens */
+@media (min-width: 768px) {
+  .menu-card {
+    width: 350px; /* Increase width on larger screens */
+  }
+
+  .menu-item-image {
+    height: 300px; /* Adjust image size on larger screens */
+  }
 }

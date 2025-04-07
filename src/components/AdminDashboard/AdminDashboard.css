@@ -58,6 +58,11 @@
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: box-shadow 0.3s ease, transform 0.2s ease;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
 }
 
 .admin-dashboard__list-item:hover {
@@ -77,6 +82,7 @@
   text-decoration: none;
   font-weight: 500;
   transition: color 0.3s ease;
+  margin-right: 15px;
 }
 
 .admin-dashboard__link:hover {
@@ -96,6 +102,58 @@
   font-size: 1.1rem;
   margin-top: 20px;
   text-align: center;
+}
+
+/* Style the buttons within the card */
+.admin-dashboard__delete-btn {
+  background-color: #e74c3c;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.admin-dashboard__delete-btn:hover {
+  background-color: #c0392b;
+  transform: translateY(-2px);
+}
+
+.admin-dashboard__delete-btn:active {
+  transform: translateY(0);
+}
+
+.admin-dashboard__modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.admin-dashboard__modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  text-align: center;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.admin-dashboard__modal-buttons {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.admin-dashboard__modal-buttons button {
+  width: 100px;
 }
 
 @media (max-width: 768px) {
@@ -126,5 +184,11 @@
 
   .admin-dashboard__no-data {
     font-size: 1rem;
+  }
+
+  /* Make buttons inside cards stack on mobile view */
+  .admin-dashboard__list-item {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }

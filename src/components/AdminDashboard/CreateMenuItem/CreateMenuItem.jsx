@@ -10,6 +10,7 @@ const CreateMenuItem = () => {
     description: "",
     price: "",
     category: "",
+    imageUrl: ""  // Add imageUrl field
   });
   const [message, setMessage] = useState(""); // State for feedback messages
 
@@ -46,6 +47,7 @@ const CreateMenuItem = () => {
         description: "",
         price: "",
         category: "",
+        imageUrl: "" // Reset image URL
       });
     } catch (err) {
       setMessage(err.message); // Set error message if creation fails
@@ -111,11 +113,20 @@ const CreateMenuItem = () => {
           className="input-field"
         >
           <option value="">Select a category</option>
-          <option value="Appetizers">Appetizers</option>  
+          <option value="Appetizers">Appetizers</option>
           <option value="Main Course">Main Course</option>
           <option value="Desserts">Desserts</option>
           <option value="Drinks">Drinks</option>
         </select>
+
+        <label>Image URL:</label>
+        <input
+          type="url"
+          name="imageUrl"
+          value={formData.imageUrl}  // Bind input value to state
+          onChange={handleChange}     // Handle input change
+          className="input-field"
+        />
 
         <button type="submit" className="submit-btn">Add Menu Item</button> {/* Submit button */}
       </form>
